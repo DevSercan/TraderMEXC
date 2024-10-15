@@ -20,7 +20,12 @@ def getLanguage(language:str="en") -> dict:
 
 def getAPIKeys() -> dict:
     """ keys.json dosyasındaki API anahtarlarını sözlük olarak döndürür. """
-    with open("keys.json", 'r', encoding='utf-8') as file:
+    filePath = "keys.json"
+    if not os.path.exists(filePath):
+        defaultData = { "accessKey": "", "secretKey": "" }
+        with open(filePath, 'w', encoding='utf-8') as file:
+            json.dump(defaultData, file, indent=4)
+    with open(filePath, 'r', encoding='utf-8') as file:
         apiKeysDict = json.load(file)
     return apiKeysDict
 
